@@ -1,0 +1,15 @@
+artifact_uri: file:F:/GITHUB/finance-ll-complaints/114496163058747961/72f9409033cb4c688b028818607ea752/artifacts#
+  leave blank for local; set to Azure ML later
+end_time: 1755433065680
+entry_point_name: ''
+experiment_id: '114496163058747961'
+lifecycle_stage: active
+run_id: 72f9409033cb4c688b028818607ea752
+run_name: analyse_single
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1755433065631
+status: 3
+tags: []
+user_id: saketh pc

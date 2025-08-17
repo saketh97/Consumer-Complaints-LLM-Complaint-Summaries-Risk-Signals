@@ -3,22 +3,42 @@ from pydantic import BaseModel, Field, field_validator
 from typing import List
 
 ALLOWED = {"Billing","Collections","DataPrivacy","Fees","MisSelling","Fraud","Other"}
-# very lightweight synonym map → our 7 buckets
 SYN = {
     "billing": "Billing",
-    "charges": "Billing",
+    "bill": "Billing",
+    "statement": "Billing",
+    "payment allocation": "Billing",
+
+    "fee": "Fees",
     "fees": "Fees",
-    "collections": "Collections",
+    "charge": "Fees",
+    "charges": "Fees",
+    "overdraft": "Fees",
+    "late fee": "Fees",
+    "interest charge": "Fees",
+
+    "collection": "Collections",
     "debt collection": "Collections",
+    "collector": "Collections",
+
+    "credit report": "DataPrivacy",
     "credit reporting": "DataPrivacy",
-    "data privacy": "DataPrivacy",
+    "incorrect information": "DataPrivacy",
     "privacy": "DataPrivacy",
+    "data breach": "DataPrivacy",
+
     "fraud": "Fraud",
     "scam": "Fraud",
+    "unauthorized": "Fraud",
+    "identity theft": "Fraud",
+
     "mis-selling": "MisSelling",
     "misselling": "MisSelling",
     "mis selling": "MisSelling",
+    "deceptive": "MisSelling",
+    "misleading": "MisSelling",
 }
+
 
 class Extraction(BaseModel):
     customer_entities: List[str] = Field(default_factory=list)
