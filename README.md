@@ -1,4 +1,7 @@
-Finance LLM — Complaint Summaries & Risk Signals
+<p align="center">
+  <img src="assets/banner.png" alt="Consumer-Complaints-LLM-Complaint-Summaries-Risk-Signals" width="900">
+</p>
+
 
 OpenAI + LangChain structured outputs • Pydantic • (optional) MLflow logging • Streamlit UI
 
