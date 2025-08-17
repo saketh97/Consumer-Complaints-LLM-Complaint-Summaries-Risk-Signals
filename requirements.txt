@@ -1,0 +1,19 @@
+# Core
+pandas
+python-dotenv
+pydantic
+
+# LLM stack
+langchain
+langchain-openai
+openai
+tiktoken
+
+# Tracking & serving
+mlflow
+fastapi
+uvicorn[standard]
+streamlit
+
+# Nice-to-haves (safe to keep)
+requests
