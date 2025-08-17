@@ -16,6 +16,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
+import mlflow
 st.set_page_config(page_title="Finance LLM — Complaints", page_icon="💳", layout="wide")
 load_dotenv()  # load .env if present
 
@@ -54,6 +55,7 @@ if st.sidebar.button("Use OpenAI key for this session"):
 
 log_mlflow = st.sidebar.checkbox("Log to MLflow", value=True)
 st.sidebar.caption("Tip: run `mlflow ui` in a terminal to inspect runs.")
+st.sidebar.markdown(f"**MLflow tracking URI:** `{mlflow.get_tracking_uri()}`")
 
 # -------------------------------------------------------------------
 # Header
