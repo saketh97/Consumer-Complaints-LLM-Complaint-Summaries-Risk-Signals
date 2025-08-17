@@ -92,8 +92,7 @@ if __name__ == "__main__":  # NEW
     p_batch.add_argument("-i", "--in-csv", required=True, help="Input CSV with a 'text' column")
     p_batch.add_argument("-o", "--out-csv", required=True, help="Output CSV path to write results")
     p_batch.add_argument("-n", "--limit", type=int, default=200, help="Max rows to process")
-    p_batch.add_argument("--no-mlflow", action="store_true", help="Disable MLflow logging for the batch")
-
+    
     args = parsers.parse_args()
 
     if args.cmd == "single":
@@ -102,4 +101,4 @@ if __name__ == "__main__":  # NEW
         print(json.dumps(res, indent=2, ensure_ascii=False))
 
     elif args.cmd == "batch":
-        analyze_csv(args.in_csv, args.out_csv, limit=args.limit, run_mlflow=not args.no_mlflow)
+        analyze_csv(args.in_csv, args.out_csv, limit=args.limit)
