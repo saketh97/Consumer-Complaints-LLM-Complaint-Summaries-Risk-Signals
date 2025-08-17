@@ -4,6 +4,8 @@ import pandas as pd
 from dotenv import load_dotenv
 from pydantic import ValidationError
 from typing import Dict,Any
+import argparse
+import json
 
 from langchain_openai import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
@@ -21,7 +23,9 @@ SYSTEM = """ You are a careful financial complaints analyst.
 Return ONLY valid JSON matching the schema and be neutral, concise, and specific.
 Risk categories: Billing, Collections, DataPrivacy, Fees, MisSelling, Fraud, Other.
 IMPORTANT:
-- 'risk_confidence' MUST be a bare number between 0 and 1 (no quotes, not a percentage).
+- 'risk_confidence' MUST be a number between 0 and 1 (no quotes, not a string, not a percentage).
+- Arrays must contain plain strings.
+- Do not include any keys not in the schema.
 """
 
 USER_TMPL="""
@@ -59,7 +63,7 @@ def analyze_text(text: str, run_mlflow: bool=True) -> Dict[str,Any]:
                 mlflow.log_metric(f"tokens_{k}", v if isinstance(v,(int,float)) else 0)
     return obj
 
-def analyse_csv(in_csv: str, out_csv: str, limit: int=200):
+def analyze_csv(in_csv: str, out_csv: str, limit: int=200):
     df = pd.read_csv(in_csv).dropna(subset=["text"])
     if len(df) > limit: df = df.sample(limit,random_state=42)
     
@@ -73,3 +77,29 @@ def analyse_csv(in_csv: str, out_csv: str, limit: int=200):
     pd.DataFrame(rows).to_csv(out_csv,index=False)
     print(f"saved -> {out_csv},rows={len(rows)}")
 
+
+if __name__ == "__main__":  # NEW
+    parsers = argparse.ArgumentParser(prog="chains", description="LLM complaint analyzer (LangChain + Pydantic + MLflow)")
+    sub = parsers.add_subparsers(dest="cmd", required=True)
+
+    # Single-text mode
+    p_single = sub.add_parser("single", help="Analyze a single text")
+    p_single.add_argument("-t", "--text", required=True, help="Complaint text to analyze")
+    p_single.add_argument("--no-mlflow", action="store_true", help="Disable MLflow logging for this call")
+
+    # Batch mode
+    p_batch = sub.add_parser("batch", help="Analyze a CSV file")
+    p_batch.add_argument("-i", "--in-csv", required=True, help="Input CSV with a 'text' column")
+    p_batch.add_argument("-o", "--out-csv", required=True, help="Output CSV path to write results")
+    p_batch.add_argument("-n", "--limit", type=int, default=200, help="Max rows to process")
+    p_batch.add_argument("--no-mlflow", action="store_true", help="Disable MLflow logging for the batch")
+
+    args = parsers.parse_args()
+
+    if args.cmd == "single":
+        res = analyze_text(args.text, run_mlflow=not args.no_mlflow)
+        # pretty-print JSON to stdout
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+
+    elif args.cmd == "batch":
+        analyze_csv(args.in_csv, args.out_csv, limit=args.limit, run_mlflow=not args.no_mlflow)
