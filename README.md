@@ -19,6 +19,7 @@ OpenAI + LangChain structured outputs • Pydantic • (optional) MLflow logging
     Tracks latency (and optionally tokens) with MLflow.
 
 📂 Project structure
+
     finance-ll-complaints/
     ├─ app/
     │  └─ app.py                     # Streamlit UI (OpenAI-only)
@@ -108,11 +109,11 @@ Create a local .env (copy from the example and fill your key):
     Anchoring: The prompt applies precedence rules to reduce drift (e.g., prioritize credit-reporting signals → DataPrivacy).
 
 🖼️ Screenshots
-    **Streamlit — Single analysis**  
-    ![Single Analysis](assets/streamlit_single.png)
+**Streamlit — Single analysis**  
+![Single Analysis](assets/streamlit_single.png)
 
-    **MLflow — Runs**  
-    ![MLflow UI](assets/mlflow_run.png)
+**MLflow — Runs**  
+![MLflow UI](assets/mlflow_run.png)
 
 🗺️ Roadmap
 
