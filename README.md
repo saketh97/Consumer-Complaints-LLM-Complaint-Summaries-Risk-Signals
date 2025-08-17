@@ -3,8 +3,6 @@
 </p>
 
 
-OpenAI + LangChain structured outputs • Pydantic • (optional) MLflow logging • Streamlit UI
-
 🚀 What this project does
 
     Ingests public consumer-finance complaints (e.g., CFPB CSV).
