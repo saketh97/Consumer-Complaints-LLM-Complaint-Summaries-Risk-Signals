@@ -21,7 +21,7 @@ parser = PydanticOutputParser(pydantic_object=LLMOutput)
 
 SYSTEM = """ You are a careful financial complaints analyst.
 Return ONLY valid JSON matching the schema and be neutral, concise, and specific.
-Risk categories: Billing, Collections, DataPrivacy, Fees, MisSelling, Fraud, Other.
+Risk categories (Return exactly one of these): Billing, Collections, DataPrivacy, Fees, MisSelling, Fraud, Other.
 IMPORTANT:
 - 'risk_confidence' MUST be a number between 0 and 1 (no quotes, not a string, not a percentage).
 - Arrays must contain plain strings.
